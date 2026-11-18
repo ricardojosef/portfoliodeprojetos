@@ -1,58 +1,850 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Inicial - Ricardo Jose</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    <link rel="shortcut icon" href="newfavicon-1.png" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ricardo José · Portfólio</title>
+<meta name="description" content="Portfólio de Ricardo José: produtos digitais, automações com IA, chatbots, simuladores e visão computacional.">
+<meta name="theme-color" content="#1E1267">
+<link rel="shortcut icon" href="newfavicon-1.png" type="image/x-icon">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+<style>
+@font-face{font-family:'Sora';src:url('Sora-Regular.ttf') format('truetype');font-weight:400;font-display:swap}
+@font-face{font-family:'Sora';src:url('Sora-Bold.woff2') format('woff2'),url('Sora-Bold.woff') format('woff'),url('Sora-Bold.ttf') format('truetype');font-weight:700;font-display:swap}
 
-    <link rel="stylesheet" href="style.css">
+:root{
+  --navy:#1E1267;
+  --cyan:#269EB9;
+  --grad:linear-gradient(90deg,#1E1267,#269EB9);
+  --ink:#1f1f1f;
+  --muted:#5d5f6b;
+  --bg:#ececec;
+  --surface:#e9e9e9;
+  --card:#f4f4f6;
+  --line:rgba(30,18,103,.14);
+  --sh-out:6px 6px 12px #c5c5c5,-6px -6px 12px #ffffff;
+  --sh-in:inset 4px 4px 12px #c5c5c5,inset -4px -4px 12px #ffffff;
+  --r:14px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Sora',system-ui,sans-serif;background:var(--bg);color:var(--ink);overflow-x:hidden;-webkit-font-smoothing:antialiased}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+.wrap{max-width:1180px;margin:0 auto;padding:0 32px}
+.grad-text{background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.tag{font-family:'Sora';font-weight:700;letter-spacing:.02em}
+
+/* ---------- barra de progresso + nav ---------- */
+#progress{position:fixed;top:0;left:0;height:3px;width:100%;background:var(--grad);transform-origin:0 50%;transform:scaleX(0);z-index:1000}
+nav.top{position:fixed;top:14px;left:50%;transform:translateX(-50%);z-index:900;display:flex;gap:4px;padding:6px;border-radius:999px;background:rgba(236,236,236,.78);backdrop-filter:blur(10px);box-shadow:var(--sh-out);border:1px solid var(--line);opacity:0}
+nav.top a{font-size:13px;padding:8px 14px;border-radius:999px;color:var(--muted);transition:.25s}
+nav.top a:hover,nav.top a.active{color:#fff;background:var(--grad)}
+
+/* ---------- hero (mantém a ideia original) ---------- */
+#hero{min-height:100vh;display:flex;align-items:center;position:relative;overflow:hidden;background:linear-gradient(180deg,#fff 0%,#fff 84%,var(--bg) 100%)}
+#hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%}
+.code-bg{position:absolute;inset:0;pointer-events:none;font-family:ui-monospace,Consolas,monospace;font-size:13px;color:rgba(30,18,103,.07);white-space:pre;line-height:1.9;overflow:hidden;user-select:none;-webkit-mask-image:linear-gradient(90deg,#000 35%,transparent 52%);mask-image:linear-gradient(90deg,#000 35%,transparent 52%)}
+h1.type{font-weight:700;font-size:clamp(30px,4.3vw,56px);line-height:1.12;display:inline}
+#cursor{font-size:clamp(30px,4.3vw,56px);color:var(--cyan);font-weight:700;animation:blink 1s steps(1) infinite}
+@keyframes blink{50%{opacity:0}}
+.hero-lead{font-size:clamp(15px,1.3vw,18px);line-height:1.75;color:var(--ink);margin:22px 0 10px;max-width:600px}
+.hero-lead strong{color:var(--navy)}
+.hero-cta{display:flex;flex-wrap:wrap;gap:14px;margin-top:26px}
+.hero-photo{position:relative;justify-self:center}
+.hero-photo img{width:min(470px,100%)}
+.float-chip{position:absolute;background:var(--surface);box-shadow:var(--sh-out);border:1px solid var(--line);border-radius:12px;padding:10px 14px;font-size:12px;display:flex;gap:9px;align-items:center;white-space:nowrap}
+.float-chip i{color:var(--cyan);font-size:16px}
+.float-chip b{display:block;font-size:15px;color:var(--navy)}
+.fc1{top:16%;left:-8%}.fc2{top:52%;right:-6%}.fc3{bottom:10%;left:2%}
+.scroll-cue{position:absolute;bottom:26px;left:50%;transform:translateX(-50%);font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:8px}
+.scroll-cue .mouse{width:22px;height:34px;border:2px solid var(--navy);border-radius:12px;position:relative}
+.scroll-cue .mouse::after{content:"";position:absolute;left:50%;top:6px;width:4px;height:7px;border-radius:2px;background:var(--cyan);transform:translateX(-50%);animation:wheel 1.6s infinite}
+@keyframes wheel{to{transform:translate(-50%,10px);opacity:0}}
+
+/* ---------- botões neumórficos (estilo original) ---------- */
+.btn,.icon-btn{position:relative;overflow:hidden;z-index:1;display:inline-flex;align-items:center;gap:10px;cursor:pointer;border:1px solid var(--navy);border-radius:8px;background:var(--surface);color:var(--ink);box-shadow:var(--sh-out);font-family:'Sora';transition:color .4s,box-shadow .2s}
+.btn{padding:15px 22px;font-size:14px}
+.btn.primary{background:var(--grad);color:#fff;border-color:transparent}
+.icon-btn{padding:.45em .6em;font-size:24px}
+.btn::before,.icon-btn::before{content:"";position:absolute;left:50%;top:100%;width:140%;height:180%;transform:translateX(-50%) scaleX(1.25);background:rgba(0,0,0,.05);border-radius:50%;transition:all .4s .1s;z-index:-1}
+.btn::after,.icon-btn::after{content:"";position:absolute;left:55%;top:180%;width:160%;height:190%;transform:translateX(-50%) scaleX(1.45);background:var(--navy);transition:all .5s .1s cubic-bezier(.55,0,.1,1);z-index:-1}
+.btn:hover,.icon-btn:hover{color:#fff}
+.btn:hover::before,.icon-btn:hover::before{top:-35%;background:var(--navy)}
+.btn:hover::after,.icon-btn:hover::after{top:-45%;background-image:linear-gradient(0deg,var(--navy),var(--cyan));transform:translateX(-50%) scaleY(1.3) scaleX(.8)}
+.btn:active,.icon-btn:active{box-shadow:var(--sh-in)}
+
+/* ---------- seções ---------- */
+section{padding:110px 0}
+.sec-head{margin-bottom:46px;max-width:760px}
+.sec-kicker{font-size:13px;color:var(--cyan);font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:10px}
+.sec-title{font-weight:700;font-size:clamp(28px,3.4vw,44px);line-height:1.12}
+.sec-sub{color:var(--muted);line-height:1.7;margin-top:14px;font-size:16px}
+
+/* ---------- números ---------- */
+#numeros{padding:0;margin-top:-20px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;background:var(--navy);background:linear-gradient(120deg,#1E1267 0%,#1b2a7d 55%,#269EB9 140%);border-radius:22px;padding:38px 34px;color:#fff;position:relative;overflow:hidden}
+.stats::after{content:"";position:absolute;width:420px;height:420px;border-radius:50%;right:-120px;top:-200px;background:rgba(255,255,255,.06)}
+.stat .n{font-weight:700;font-size:clamp(30px,3.4vw,46px);line-height:1}
+.stat .n small{font-size:.55em;opacity:.8}
+.stat .l{font-size:13px;opacity:.82;margin-top:8px;line-height:1.5}
+
+/* ---------- filtros ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:34px}
+.chip{font-family:'Sora';font-size:13px;padding:10px 16px;border-radius:999px;border:1px solid var(--line);background:var(--surface);box-shadow:var(--sh-out);cursor:pointer;color:var(--muted);transition:.25s}
+.chip:hover{color:var(--navy)}
+.chip.on{background:var(--grad);color:#fff;border-color:transparent;box-shadow:none}
+.chip .c{opacity:.7;margin-left:4px;font-size:11px}
+
+/* ---------- projetos ---------- */
+.projects{display:grid;grid-template-columns:repeat(6,1fr);gap:24px}
+.proj{grid-column:span 2;background:var(--card);border-radius:18px;border:1px solid var(--line);box-shadow:var(--sh-out);overflow:hidden;display:flex;flex-direction:column;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s;transform-style:preserve-3d}
+.proj.wide{grid-column:span 3}
+.proj.feature{grid-column:span 6;display:grid;grid-template-columns:1.1fr 1fr}
+.proj:hover{box-shadow:0 22px 40px rgba(30,18,103,.16)}
+.proj.hide{display:none}
+.proj-body{padding:24px 24px 26px;display:flex;flex-direction:column;flex:1}
+.proj-meta{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}
+.proj-ctx{font-size:11.5px;color:var(--cyan);font-weight:700;letter-spacing:.1em;text-transform:uppercase}
+.status{font-size:11px;padding:5px 10px;border-radius:999px;background:rgba(38,158,185,.12);color:#16708a;display:inline-flex;gap:6px;align-items:center;white-space:nowrap}
+.status::before{content:"";width:6px;height:6px;border-radius:50%;background:#1aa37a}
+.proj h3{font-weight:700;font-size:20px;line-height:1.25;margin-bottom:10px}
+.proj.feature h3{font-size:clamp(22px,2.4vw,30px)}
+.proj p{font-size:14px;line-height:1.7;color:var(--muted)}
+.proj p b{color:var(--ink)}
+.impact{margin:16px 0;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:12px;box-shadow:var(--sh-in)}
+.impact .big{font-weight:700;font-size:24px;line-height:1;white-space:nowrap}
+.impact span{font-size:12.5px;color:var(--muted);line-height:1.45}
+.tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:6px}
+.tags span{font-size:11px;padding:5px 10px;border-radius:999px;border:1px solid var(--line);color:var(--navy);background:rgba(255,255,255,.5)}
+.proj-links{display:flex;gap:14px;margin-top:16px;font-size:13px}
+.proj-links a{color:var(--navy);display:inline-flex;gap:6px;align-items:center;border-bottom:1px solid transparent;transition:.2s}
+.proj-links a:hover{color:var(--cyan);border-color:var(--cyan)}
+.proj-links a.soon{color:var(--muted);pointer-events:none;opacity:.7}
+
+/* placeholder de imagem — preencha data-img="arquivo.webp" para trocar */
+.ph{position:relative;aspect-ratio:16/10;margin:0;overflow:hidden;background:
+  repeating-linear-gradient(135deg,rgba(30,18,103,.045) 0 12px,transparent 12px 24px),
+  linear-gradient(135deg,#e2e4ee,#d9eef3);display:grid;place-items:center;border-bottom:1px solid var(--line)}
+.proj.feature .ph{aspect-ratio:auto;min-height:100%;border-bottom:0;border-right:1px solid var(--line)}
+.ph .ph-in{display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--navy);opacity:.65;font-size:12px;text-align:center;padding:0 20px}
+.ph .ph-in i{font-size:28px}
+.ph .ph-in em{font-style:normal;font-size:10.5px;opacity:.8;font-family:ui-monospace,Consolas,monospace}
+.ph .num{position:absolute;left:16px;top:10px;font-weight:700;font-size:44px;color:rgba(30,18,103,.12);line-height:1}
+
+/* mídia com hover: imagens em sequência, vídeo opcional ou chat animado */
+.ph.media{background:#fff;cursor:pointer}
+.ph.media .num{display:none}
+.ph .frame,.ph video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:0% 0%;opacity:0;will-change:transform,opacity}
+.ph .frame.first{opacity:1}
+.ph video{opacity:0;background:#000}
+.ph.media::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 55%,rgba(30,18,103,.28));opacity:1;transition:opacity .4s;pointer-events:none}
+.ph.media.playing::after{opacity:0}
+.media-hint{position:absolute;left:12px;bottom:12px;z-index:3;display:inline-flex;align-items:center;gap:8px;font-size:11.5px;color:#fff;background:rgba(30,18,103,.78);backdrop-filter:blur(6px);padding:7px 12px 7px 8px;border-radius:999px;transition:opacity .3s,transform .3s}
+.media-hint i{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;background:var(--grad);font-size:8px}
+.ph.playing .media-hint{opacity:0;transform:translateY(6px)}
+/* visão computacional: camada SVG no mesmo espaço da imagem (1000×500) */
+.ph[data-cv]{background:#000}
+.ph[data-cv] .frame{object-position:50% 50%}
+.ph .cv{position:absolute;inset:0;width:100%;height:100%;z-index:2;pointer-events:none;font-family:ui-monospace,Consolas,monospace}
+.cv>*:not(defs){opacity:0}
+.cv-t{fill:#fff;font-size:24px;letter-spacing:.04em;paint-order:stroke;stroke:#000;stroke-width:6px}
+.cv-trail{stroke:#3ee0ff;stroke-width:2.5;stroke-dasharray:6 6}
+.cv-win rect{fill:rgba(62,224,255,.06);stroke:#3ee0ff;stroke-width:1.5;stroke-dasharray:5 5}
+.cv-win .cv-corner{fill:none;stroke:#3ee0ff;stroke-width:5}
+.cv-win circle{fill:none;stroke:#3ee0ff;stroke-width:2;opacity:.8}
+.cv-win text{fill:#3ee0ff;font-size:20px;font-weight:700;paint-order:stroke;stroke:#000;stroke-width:5px}
+.cv-vecs line{stroke:#ffd166;stroke-width:2.5}
+.cv-vel{stroke:#3ee0ff;stroke-width:6;stroke-linecap:round;stroke-dasharray:1}
+.cv-vl{fill:#3ee0ff;font-size:22px;font-weight:700;paint-order:stroke;stroke:#000;stroke-width:6px}
+.media-count{position:absolute;right:12px;bottom:12px;z-index:3;font-size:11px;color:#fff;background:rgba(0,0,0,.45);padding:4px 9px;border-radius:999px}
+.media-bar{position:absolute;left:0;right:0;top:0;height:3px;z-index:4;display:flex;gap:3px;padding:0 3px;opacity:0;transition:opacity .3s}
+.ph.playing .media-bar{opacity:1}
+.media-bar span{flex:1;background:rgba(255,255,255,.55);border-radius:2px;overflow:hidden}
+.media-bar span i{display:block;height:100%;background:var(--cyan);transform-origin:0 50%;transform:scaleX(0)}
+.hover-tip{color:var(--navy)}
+@media (hover:none){.hover-tip{display:none}}
+
+/* chat animado (assistente de WhatsApp) */
+.chat{position:absolute;inset:0;z-index:2;display:grid;place-items:center;background:rgba(236,229,221,.0);opacity:0;pointer-events:none;transition:opacity .35s,background .35s}
+.ph.playing .chat{opacity:1;background:rgba(30,18,103,.35)}
+.phone{width:min(330px,88%);height:min(440px,92%);background:#efeae2;border-radius:22px;border:6px solid #1b1b1b;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 48px rgba(0,0,0,.35);transform:translateY(16px);transition:transform .4s cubic-bezier(.2,.8,.2,1)}
+.ph.playing .phone{transform:none}
+.phone-top{background:#075e54;color:#fff;display:flex;align-items:center;gap:9px;padding:9px 12px;font-size:12.5px;flex:none}
+.phone-top .av{width:28px;height:28px;border-radius:50%;background:#f26b1d;display:grid;place-items:center;font-size:13px}
+.phone-top small{display:block;font-size:10.5px;opacity:.8}
+.chat-body{flex:1;display:flex;flex-direction:column;justify-content:flex-end;gap:6px;padding:10px;overflow:hidden;font-family:system-ui,'Segoe UI',sans-serif}
+.msg{max-width:84%;font-size:12px;line-height:1.45;padding:6px 9px;border-radius:8px;box-shadow:0 1px 1px rgba(0,0,0,.12);white-space:pre-line;color:#111;flex:none}
+.msg.bot{align-self:flex-start;background:#fff;border-top-left-radius:2px}
+.msg.user{align-self:flex-end;background:#d9fdd3;border-top-right-radius:2px}
+.msg a{color:#027eb5}
+.msg.typing{display:flex;gap:4px;padding:9px 11px}
+.msg.typing b{width:6px;height:6px;border-radius:50%;background:#9aa0a6;animation:dot 1s infinite}
+.msg.typing b:nth-child(2){animation-delay:.15s}.msg.typing b:nth-child(3){animation-delay:.3s}
+@keyframes dot{0%,60%,100%{transform:none;opacity:.5}30%{transform:translateY(-3px);opacity:1}}
+.chat-tag{align-self:center;font-size:10.5px;background:#fff7d6;color:#6b5b00;padding:3px 9px;border-radius:6px;flex:none}
+
+/* repositórios de estudo (botões do index original) */
+.repos{margin-top:60px}
+.repos h4{font-size:15px;margin-bottom:16px;color:var(--muted);font-weight:400}
+.repos .grid{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+.repos .btn{width:100%;justify-content:space-between;font-size:13px;line-height:1.4;text-align:left}
+
+/* ---------- método ---------- */
+.method{display:grid;grid-template-columns:repeat(4,1fr);gap:22px;counter-reset:m}
+.step{padding:26px 22px;border-radius:18px;box-shadow:var(--sh-in);position:relative}
+.step::before{counter-increment:m;content:"0" counter(m);font-weight:700;font-size:36px;display:block;margin-bottom:14px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent}
+.step h4{font-size:16px;margin-bottom:8px}
+.step p{font-size:13.5px;color:var(--muted);line-height:1.65}
+.method-line{height:2px;background:var(--grad);transform-origin:0 50%;margin:0 0 30px;border-radius:2px}
+
+/* ---------- experiência (timeline) ---------- */
+.timeline{position:relative;padding-left:34px}
+.timeline .rail{position:absolute;left:8px;top:6px;bottom:6px;width:2px;background:var(--line)}
+.timeline .rail i{position:absolute;inset:0;background:var(--grad);transform-origin:50% 0;transform:scaleY(0)}
+.job{position:relative;padding:0 0 42px}
+.job::before{content:"";position:absolute;left:-32px;top:6px;width:14px;height:14px;border-radius:50%;background:var(--bg);border:3px solid var(--cyan)}
+.job .when{font-size:12.5px;color:var(--cyan);letter-spacing:.06em}
+.job h3{font-size:20px;margin:6px 0 2px}
+.job .org{font-size:14px;color:var(--navy)}
+.job ul{margin-top:12px;list-style:none;display:grid;gap:8px}
+.job li{font-size:14px;line-height:1.7;color:var(--muted);padding-left:18px;position:relative}
+.job li::before{content:"";position:absolute;left:0;top:11px;width:8px;height:2px;background:var(--cyan)}
+.job li b{color:var(--ink)}
+
+/* ---------- competências ---------- */
+.skills{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.skill{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:22px;box-shadow:var(--sh-out)}
+.skill .ico{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;background:var(--grad);color:#fff;font-size:18px;margin-bottom:14px}
+.skill h4{font-size:15px;margin-bottom:8px}
+.skill p{font-size:13px;line-height:1.7;color:var(--muted)}
+.edu{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px}
+.edu div{padding:20px;border-radius:16px;box-shadow:var(--sh-in)}
+.edu b{display:block;font-size:14px;margin-bottom:6px}
+.edu span{font-size:12.5px;color:var(--muted);line-height:1.6}
+
+/* ---------- contato ---------- */
+#contato{text-align:center}
+.contact-title{font-weight:700;font-size:clamp(32px,5vw,64px);line-height:1.1}
+.contact-sub{color:var(--muted);margin:18px auto 34px;max-width:560px;line-height:1.7}
+.socials{display:flex;justify-content:center;flex-wrap:wrap;gap:14px}
+footer{text-align:center;padding:40px 0 50px;font-size:12px;color:gray;font-style:italic}
+
+/* ---------- responsivo ---------- */
+@media (max-width:1024px){
+  .proj,.proj.wide{grid-column:span 3}
+  .proj.feature{grid-template-columns:1fr}
+  .proj.feature .ph{aspect-ratio:16/9;border-right:0;border-bottom:1px solid var(--line)}
+  .method,.repos .grid{grid-template-columns:repeat(2,1fr)}
+  .skills{grid-template-columns:repeat(2,1fr)}
+  .fc1{left:0}.fc2{right:0}
+}
+@media (max-width:767px){
+  .wrap{padding:0 16px}
+  nav.top{display:none}
+  #hero{min-height:auto;padding:40px 0 70px}
+  .code-bg{display:none}
+  #hero .wrap{grid-template-columns:1fr;text-align:center}
+  .hero-photo{order:-1}
+  .hero-photo img{width:min(300px,80vw)}
+  .float-chip{display:none}
+  .hero-lead{text-align:left}
+  .hero-cta{justify-content:center}
+  .scroll-cue{display:none}
+  section{padding:72px 0}
+  .stats{grid-template-columns:repeat(2,1fr);padding:28px 22px}
+  .projects{grid-template-columns:1fr}
+  .proj,.proj.wide,.proj.feature{grid-column:auto}
+  .method,.repos .grid,.skills,.edu{grid-template-columns:1fr}
+  .icon-btn{font-size:20px}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
 </head>
 <body>
-    <div id="main">
-        <div id="esquerda">
-            <img src="ImagemPortfólioV1.webp" alt="Rapaz de braços cruzados em fundo de código" id="mobile">
-            <h1 id="mobile">&lt;Prazer, sou o Ricardo!></h1>
-           <h1 id="typing"></h1><span id="cursor">|</span>
-           <p>Seja bem-vindo(a) aos meus repositórios no GitHub. Meu nome é Ricardo José, sou estudante de <strong>Engenharia de Controle e Automação</strong> na Universidade Federal de Santa Catarina(UFSC). Navegue por aqui:</p>
-           
-           <a href="https://github.com/ricardojosef/html-css" target="_blank"><button class="linkproj" id="b1">Projetos de estudo de HTML5 e CSS3</button></a>
-           <a href="https://github.com/ricardojosef/javascript" target="_blank"><button class="linkproj" id="b2">Projetos de estudo de JavaScript</button></a>
-           <a href="https://github.com/ricardojosef/projeto-automacao-de-restaurante-python" target="_blank"><button class="linkproj" id="b3">Automação de restaurante com Python</button></a>
-           <a href="https://github.com/ricardojosef/chatbot-com-Javascript" target="_blank"><button class="linkproj" id="b4" >Chatbot automático com Javascript</button></a>
-           <p id="ipg">ou <a href="https://github.com/ricardojosef" class="links">ir direto para o GitHub</a></p>
-            <p id="contact">&lt;Entre em contato></p>
-             <abbr title="E-mail: ricardojcfufsc@gmail.com"><a href="mailto:ricardojcfufsc@gmail.com" target="_blank" class="instagram-icon" id="daesquerda">
-                <i class="fa-regular fa-envelope"></i></a></abbr>
-          <abbr title="Whatsapp">
-              <a href="https://wa.me/5533984453969" target="_blank" class="instagram-icon">
-                <i class="fa-brands fa-whatsapp whatsapp-icon"></i></a></abbr>
-            <abbr title="Linkedin">
-                    <a href="https://www.linkedin.com/in/ricardo-jose-f/" target="_blank" class="instagram-icon">
-                        <i class="fa-brands fa-linkedin linkedin-icon"></i></a></abbr>
-            <abbr title="Instagram">
-            <a href="https://instagram.com/ricardo.jcf" target="_blank" class="instagram-icon" id="insta">
-                <i class="fab fa-instagram"></i></a></abbr>
-        
-                <abbr title="GitHub">
-                    <a href="https://github.com/ricardojosef" target="_blank" class="instagram-icon" id="dadireita">
-                        <i class="fa-brands fa-github github-icon"></i></a>
-                </abbr>
-                <abbr title="Portfólio UI/UX design">
-                    <a href="https://behance.net/euricardo" target="_blank" class="instagram-icon" id="dadireita">
-                        <i class="fa-brands fa-behance behance-icon"></i></a>
-                </abbr>
+<div id="progress"></div>
 
-                    
-            <p id="footer">Esta página também foi desenvolvida por mim =)</p>
-        </div>
+<nav class="top" aria-label="Seções">
+  <a href="#hero">Início</a>
+  <a href="#projetos">Projetos</a>
+  <a href="#metodo">Método</a>
+  <a href="#experiencia">Experiência</a>
+  <a href="#competencias">Competências</a>
+  <a href="#contato">Contato</a>
+</nav>
 
-        <div id="direita">
-
-            <img src="ImagemPortfólioV1.webp" alt="" id="fotod">
-        </div>
+<!-- ================= HERO ================= -->
+<header id="hero">
+  <div class="code-bg" aria-hidden="true" id="codeBg"></div>
+  <div class="wrap">
+    <div class="hero-text">
+      <h1 class="type grad-text" id="typing" aria-label="&lt;Prazer, sou o Ricardo!&gt;"></h1><span id="cursor">|</span>
+      <p class="hero-lead">Estudante de <strong>Engenharia de Controle e Automação com ênfase em IA</strong> na UFSC, com atuação entre <strong>pessoas e tecnologia</strong>. Identifico problemas que já foram aceitos como parte da rotina, entendo o contexto com quem os vivencia, desenvolvo a solução com apoio de IA e acompanho sua adoção com indicadores.</p>
+      <div class="hero-cta">
+        <a class="btn primary" href="#projetos"><i class="fa-solid fa-layer-group"></i> Ver os projetos</a>
+        <a class="btn" href="Ricardo Jose - Curriculo GenAI 2027 - AI Builder.pdf" target="_blank"><i class="fa-regular fa-file-lines"></i> Currículo em PDF</a>
+      </div>
     </div>
-    <script src="script.js"></script>
+    <div class="hero-photo">
+      <img src="ImagemPortfólioV1.webp" alt="Ricardo José de braços cruzados em fundo de código">
+      <div class="float-chip fc1"><i class="fa-solid fa-robot"></i><div><b>5h → 30min</b>atendimento por dia</div></div>
+      <div class="float-chip fc2"><i class="fa-solid fa-bolt"></i><div><b>+55%</b>adesão com automações</div></div>
+      <div class="float-chip fc3"><i class="fa-solid fa-cubes"></i><div><b>7 produtos</b>em uso no GLean</div></div>
+    </div>
+  </div>
+  <a class="scroll-cue" href="#numeros"><span class="mouse"></span>role para ver</a>
+</header>
+
+<!-- ================= NÚMEROS ================= -->
+<section id="numeros">
+  <div class="wrap">
+    <div class="stats">
+      <div class="stat"><div class="n"><span data-count="7">0</span></div><div class="l">produtos digitais em uso, nenhum no meu escopo</div></div>
+      <div class="stat"><div class="n"><span data-count="300">0</span><small>+</small></div><div class="l">e-mails disparados por automações com Make e Apps Script</div></div>
+      <div class="stat"><div class="n"><span data-count="6">0</span><small>h</small></div><div class="l">poupadas por semana com o gerador automático de relatórios</div></div>
+      <div class="stat"><div class="n"><span data-count="50">0</span><small>%</small></div><div class="l">do tempo de decisão na Kystdesign, com visitas à planta reduzidas de 2 para 1 por semana</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= PROJETOS ================= -->
+<section id="projetos">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-kicker">&lt;Projetos&gt;</p>
+      <h2 class="sec-title">Soluções construídas a partir de <span class="grad-text">problemas reais</span></h2>
+      <p class="sec-sub">Chatbots, automações, plataformas web, simuladores e visão computacional. Cada projeto partiu de uma necessidade concreta, e a maioria segue em uso. <span class="hover-tip">Passe o mouse sobre as imagens para vê-las em funcionamento.</span></p>
+    </div>
+
+    <div class="filters" role="tablist">
+      <button class="chip on" data-filter="all">Todos</button>
+      <button class="chip" data-filter="ia">IA &amp; Automação</button>
+      <button class="chip" data-filter="dados">Dados &amp; Simulação</button>
+      <button class="chip" data-filter="produto">Produto &amp; Web</button>
+      <button class="chip" data-filter="lean">Lean &amp; Processos</button>
+    </div>
+
+    <!--
+      Mídia dos cards:
+        data-img="a.webp|b.webp"  → imagens; no hover elas passam em sequência, com movimento
+        data-video="demo.mp4"     → (opcional) vídeo que toca no hover, no lugar das imagens
+        data-chat                 → simulação animada da conversa do chatbot
+    -->
+    <div class="projects" id="projectGrid">
+
+      <!-- 01 -->
+      <article class="proj feature" data-cat="ia produto">
+        <figure class="ph" data-img="img/projetos/chatbot-fluxo.webp" data-chat data-label="Fluxo de atendimento do assistente"><span class="num">01</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">Barra Floripa Surf School · Florianópolis</span><span class="status">Em uso</span></div>
+          <h3>Assistente virtual de WhatsApp para escola de surf</h3>
+          <p>O proprietário dedicava <b>horas por dia</b> a responder as mesmas perguntas: horários, valores, aluguel de equipamentos e disponibilidade. O assistente identifica o idioma do cliente (<b>português, inglês ou espanhol</b>), apresenta o menu, coleta nome e nível e envia o link de agendamento, registrando cada contato.</p>
+          <p>Quando a equipe responde manualmente, o assistente pausa a conversa por 2 horas para não interferir no atendimento humano.</p>
+          <div class="impact"><span class="big grad-text">5h → 30min</span><span>de atendimento por dia, com mais de <b>100 conversas e reservas</b> conduzidas pelo assistente.</span></div>
+          <div class="tags"><span>Chatbot</span><span>WhatsApp</span><span>Multilíngue</span><span>Agendamento</span><span>Atendimento 24h</span></div>
+        </div>
+      </article>
+
+      <!-- 02 -->
+      <article class="proj wide" data-cat="produto dados ia">
+        <figure class="ph" data-img="img/projetos/gestao-agenda.webp|img/projetos/gestao-dashboards.webp" data-label="Plataforma de gestão do grupo"><span class="num">02</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">GLean · UFSC</span><span class="status">Em uso</span></div>
+          <h3>Plataforma de gestão do grupo</h3>
+          <p>Agenda, atas, encaminhamentos e comunicados num só lugar, com <b>integração às APIs do Google Calendar e Gmail</b> e dashboards de carga, satisfação e motivação. Substituiu o controle em planilhas e mostra como o tempo do grupo é distribuído.</p>
+          <div class="impact"><span class="big grad-text">20</span><span>membros ativos utilizando no dia a dia</span></div>
+          <div class="tags"><span>Google Calendar API</span><span>Gmail API</span><span>Dashboards</span><span>Front-end</span></div>
+        </div>
+      </article>
+
+      <!-- 03 -->
+      <article class="proj wide" data-cat="ia dados">
+        <figure class="ph" data-img="img/projetos/ddm-painel.webp|img/projetos/ddm-relatorio.webp" data-label="Gerador de relatórios de avaliação"><span class="num">03</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">GLean · UFSC</span><span class="status">Em uso</span></div>
+          <h3>Gerador automático de relatórios de notas</h3>
+          <p>Importa as planilhas de avaliação e gera um relatório individual por membro, com comparação entre autoavaliação e avaliação do grupo, análise por valor e evolução em relação ao período anterior, eliminando a consolidação manual.</p>
+          <div class="impact"><span class="big grad-text">6h</span><span>poupadas por semana · <b>16 relatórios</b> por período</span></div>
+          <div class="tags"><span>Automação</span><span>Dados</span><span>Relatórios</span><span>Visualização</span></div>
+        </div>
+      </article>
+
+      <!-- 04 -->
+      <article class="proj" data-cat="ia">
+        <figure class="ph" data-img="img/projetos/emails-planilha.webp" data-label="Planilha de gestão de envios"><span class="num">04</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">GLean · UFSC</span><span class="status">Em uso</span></div>
+          <h3>Automações de e-mail com Make e Apps Script</h3>
+          <p>Novos inscritos são importados automaticamente e recebem confirmação, lembretes e formulário de feedback, com o status de cada envio controlado na planilha.</p>
+          <div class="impact"><span class="big grad-text">+55%</span><span>de adesão aos eventos, <b>300+ e-mails</b> disparados</span></div>
+          <div class="tags"><span>Make</span><span>Google Apps Script</span><span>JavaScript</span></div>
+        </div>
+      </article>
+
+      <!-- 05 -->
+      <article class="proj" data-cat="dados lean">
+        <figure class="ph" data-img="img/projetos/simulador-fabrica.webp" data-label="Simulador de layout fabril em 3D"><span class="num">05</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">Kystdesign · Noruega</span><span class="status">Em uso</span></div>
+          <h3>Simulador de layout e desempenho fabril</h3>
+          <p>Planta em 3D com mobiliário, zonas produtivas e simulação de pessoas, comparando cenários <b>antes do investimento</b> com base em ocupação e distância percorrida.</p>
+          <div class="impact"><span class="big grad-text">2 → 1</span><span>visita semanal à planta, com decisões na <b>metade do tempo</b></span></div>
+          <div class="tags"><span>Simulação 3D</span><span>Plant layout</span><span>Apoio à decisão</span></div>
+        </div>
+      </article>
+
+      <!-- 06 -->
+      <article class="proj" data-cat="produto lean">
+        <figure class="ph" data-img="img/projetos/shingobar.webp" data-label="Shingobar, loja self service"><span class="num">06</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">GLean · UFSC</span><span class="status">Em uso</span></div>
+          <h3>Shingobar: loja self service do frigobar</h3>
+          <p>O controle das compras era manual e <b>dependia de cobranças individuais</b>. A loja mostra o frigobar em 3D, o estoque por sabor e registra cada pedido automaticamente.</p>
+          <div class="impact"><span class="big grad-text">2h</span><span>semanais poupadas do responsável</span></div>
+          <div class="tags"><span>Self service</span><span>3D</span><span>Controle de estoque</span></div>
+        </div>
+      </article>
+
+      <!-- 07 -->
+      <article class="proj wide" data-cat="dados">
+        <figure class="ph" data-img="img/projetos/powerbi-indicadores.webp" data-label="Painel Power BI de indicadores"><span class="num">07</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">GLean · UFSC</span><span class="status">Semanal</span></div>
+          <h3>Indicadores de satisfação e bem-estar em Power BI</h3>
+          <p>Transformo as pesquisas aplicadas aos membros em <b>indicadores semanais</b> de motivação, satisfação, sobrecarga e tempo extra, que orientam os planos de ação com base em dados.</p>
+          <div class="impact"><span class="big grad-text">Semanal</span><span>índices dentro das médias previstas por mais tempo</span></div>
+          <div class="tags"><span>Power BI</span><span>Pesquisa</span><span>Indicadores</span></div>
+        </div>
+      </article>
+
+      <!-- 08 -->
+      <article class="proj wide" data-cat="dados ia">
+        <figure class="ph" data-img="img/projetos/bolhas-frame1.webp|img/projetos/bolhas-frame2.webp" data-cv data-label="Frames com detecção e rastreio de bolhas"><span class="num">08</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">SINMEC · UFSC</span><span class="status">Pesquisa</span></div>
+          <h3>Visão computacional para escoamento multifásico</h3>
+          <p>Modelo de <b>deep learning</b> para detectar e rastrear bolhas, treinado sobre <b>imagens sintéticas</b> geradas para o problema, já que não existia dataset pronto. Cada rodada sem convergência orientou ajustes de arquitetura, dados ou pré-processamento.</p>
+          <div class="impact"><span class="big grad-text">DL + CV</span><span>avanço relevante para a linha de pesquisa do laboratório</span></div>
+          <div class="tags"><span>Python</span><span>Deep learning</span><span>Visão computacional</span></div>
+        </div>
+      </article>
+
+      <!-- 09 -->
+      <article class="proj" data-cat="lean produto">
+        <figure class="ph" data-img="img/projetos/andon-cena-painel.webp|img/projetos/andon-cena-alerta.webp|img/projetos/andon-cena-alerta-zoom.webp" data-label="Andon em funcionamento"><span class="num">09</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">GLean · UFSC</span><span class="status">Em uso</span></div>
+          <h3>Andon funcional</h3>
+          <p>O mecanismo de sinalização do chão de fábrica aplicado ao grupo: o problema fica visível no momento em que ocorre, e não na reunião da semana seguinte.</p>
+          <div class="impact"><span class="big grad-text">−22%</span><span>de ruído e retrabalho no grupo</span></div>
+          <div class="tags"><span>Andon</span><span>Lean</span></div>
+        </div>
+      </article>
+
+      <!-- 10 -->
+      <article class="proj" data-cat="produto">
+        <figure class="ph" data-img="img/projetos/glean-site.webp" data-scroll data-label="Home do site do GLean"><span class="num">10</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">GLean · UFSC</span><span class="status">No ar</span></div>
+          <h3>Site institucional do grupo</h3>
+          <p>Da arquitetura de informação ao front-end: como o GLean se apresenta para empresas e para a graduação.</p>
+          <div class="impact"><span class="big grad-text">1 porta</span><span>de entrada do processo seletivo</span></div>
+          <div class="tags"><span>UI/UX</span><span>HTML/CSS/JS</span></div>
+        </div>
+      </article>
+
+      <!-- 11 -->
+      <article class="proj" data-cat="produto">
+        <figure class="ph" data-img="img/projetos/portfolio.webp" data-label="Este portfólio"><span class="num">11</span></figure>
+        <div class="proj-body">
+          <div class="proj-meta"><span class="proj-ctx">Você está aqui</span><span class="status">No ar</span></div>
+          <h3>Este portfólio</h3>
+          <p>HTML, CSS e JavaScript puros com GSAP e ScrollTrigger, desenvolvido com IA como apoio à programação.</p>
+          <div class="impact"><span class="big grad-text">0</span><span>frameworks, com animações a serviço da leitura</span></div>
+          <div class="tags"><span>GSAP</span><span>Vanilla JS</span><span>Responsivo</span></div>
+        </div>
+      </article>
+    </div>
+
+    <div class="repos">
+      <h4>&lt;Repositórios de estudo no GitHub&gt;</h4>
+      <div class="grid">
+        <a class="btn" href="https://github.com/ricardojosef/html-css" target="_blank">Projetos de estudo de HTML5 e CSS3 <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a class="btn" href="https://github.com/ricardojosef/javascript" target="_blank">Projetos de estudo de JavaScript <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a class="btn" href="https://github.com/ricardojosef/projeto-automacao-de-restaurante-python" target="_blank">Automação de restaurante com Python <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+        <a class="btn" href="https://github.com/ricardojosef/chatbot-com-Javascript" target="_blank">Chatbot automático com JavaScript <i class="fa-solid fa-arrow-up-right-from-square"></i></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= MÉTODO ================= -->
+<section id="metodo">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-kicker">&lt;Como eu construo&gt;</p>
+      <h2 class="sec-title">IA aplicada à <span class="grad-text">operação real</span></h2>
+    </div>
+    <div class="method-line"></div>
+    <div class="method">
+      <div class="step"><h4>Entendo o problema com quem o vive</h4><p>Cada projeto começa com conversas com os usuários, para entender o contexto antes de propor qualquer solução.</p></div>
+      <div class="step"><h4>Desenvolvo com apoio de IA</h4><p>Uso IA como ferramenta de desenvolvimento no dia a dia: prototipo rapidamente, valido hipóteses e itero com base no uso real.</p></div>
+      <div class="step"><h4>Faço o número aparecer</h4><p>Horas poupadas, adesão, tempo de decisão. Se a decisão ainda depende de opinião, falta instrumentar.</p></div>
+      <div class="step"><h4>Acompanho a adoção</h4><p>Priorizo colocar uma primeira versão em uso e evoluí-la com feedback. O trabalho só termina quando a solução é adotada.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= EXPERIÊNCIA ================= -->
+<section id="experiencia">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-kicker">&lt;Experiência&gt;</p>
+      <h2 class="sec-title">Onde esses projetos <span class="grad-text">aconteceram</span></h2>
+    </div>
+    <div class="timeline">
+      <div class="rail"><i></i></div>
+      <div class="job">
+        <span class="when">jul/2025 — hoje · Florianópolis, SC</span>
+        <h3>Líder de Gestão de Pessoas</h3>
+        <span class="org">GLean, Grupo de Estudos em Lean · UFSC</span>
+        <ul>
+          <li>Três papéis em 15 meses: Processo Seletivo, Coordenador de Projetos e Líder de Gestão de Pessoas.</li>
+          <li>Projetei e entreguei <b>sete produtos internos</b> com IA como ferramenta diária. Nenhum estava no meu escopo; todos entraram em uso.</li>
+          <li>Negociei <b>6 vagas de estágio na Bosch e na Purem</b>, 4 projetos semestrais e uma visita técnica na Malwee.</li>
+          <li>Ministrei <b>quatro treinamentos</b>: Fluxo e Produção Puxada; Kata, Kaizen e A3; Supermercado; Problem Solving Estruturado.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <span class="when">jul/2026 — hoje</span>
+        <h3>Mentor em projeto de consultoria</h3>
+        <span class="org">Kystdesign, fabricante norueguesa de ROVs</span>
+        <ul>
+          <li>Oriento consultores no projeto da nova planta: layout, desperdícios e alocação de recursos.</li>
+          <li>Desenvolvi o simulador que reduziu as visitas à planta de <b>2 para 1 por semana</b>, permitindo que as decisões fossem tomadas na <b>metade do tempo</b>.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <span class="when">jan — mar/2026 · São Bernardo do Campo, SP</span>
+        <h3>Estágio de Verão</h3>
+        <span class="org">Mercedes-Benz Caminhões e Ônibus</span>
+        <ul>
+          <li><b>23 pontos de melhoria</b> na montagem final, potencial de reduzir gargalos em 12%, homologados com a vice-presidência.</li>
+          <li>Equipe multinacional, com inglês como língua de trabalho.</li>
+        </ul>
+      </div>
+      <div class="job">
+        <span class="when">mar — set/2025</span>
+        <h3>Bolsista de Iniciação Científica</h3>
+        <span class="org">SINMEC · UFSC</span>
+        <ul>
+          <li>Visão computacional e deep learning para detectar e rastrear bolhas em escoamento multifásico.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= COMPETÊNCIAS ================= -->
+<section id="competencias">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="sec-kicker">&lt;Competências&gt;</p>
+      <h2 class="sec-title">Competências e <span class="grad-text">formação</span></h2>
+    </div>
+    <div class="skills">
+      <div class="skill"><div class="ico"><i class="fa-solid fa-wand-magic-sparkles"></i></div><h4>IA e automação</h4><p>Prompt engineering avançado, criação de skills, Make, n8n e Google Apps Script, APIs do Google Calendar e Gmail, chatbots, relatórios automáticos.</p></div>
+      <div class="skill"><div class="ico"><i class="fa-solid fa-chart-line"></i></div><h4>Dados e análise</h4><p>Python, SQL e NoSQL, Power BI, construção de indicadores, deep learning e visão computacional.</p></div>
+      <div class="skill"><div class="ico"><i class="fa-solid fa-pen-ruler"></i></div><h4>Produto e experiência</h4><p>UI e UX design, prototipação, interfaces web, extração de dados e métricas de adoção.</p></div>
+      <div class="skill"><div class="ico"><i class="fa-solid fa-diagram-project"></i></div><h4>Resolução estruturada</h4><p>Lean, Kaizen, A3, Kata, PDCA, 5 porquês, Ishikawa, mapeamento de fluxo de valor, teste de hipóteses, 80/20.</p></div>
+      <div class="skill"><div class="ico"><i class="fa-solid fa-people-group"></i></div><h4>Pessoas e postura</h4><p>Comunicação com perfis técnicos e não técnicos, feedback direto, facilitação de reuniões e treinamentos.</p></div>
+      <div class="skill"><div class="ico"><i class="fa-solid fa-code"></i></div><h4>Ferramentas e idiomas</h4><p>JavaScript, HTML5, CSS3, Git e GitHub, Excel. Português nativo, inglês avançado, espanhol básico.</p></div>
+    </div>
+    <div class="edu">
+      <div><b>Engenharia de Controle e Automação, ênfase em IA</b><span>UFSC · 2023 a jun/2028 (previsão)</span></div>
+      <div><b>Técnico em Edificações</b><span>IFMG · 2019 a 2021</span></div>
+      <div><b>Gestão de Projetos e Metodologias Ágeis</b><span>Santander Open Academy · Scrum e Lean</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CONTATO ================= -->
+<section id="contato">
+  <div class="wrap">
+    <p class="sec-kicker">&lt;Entre em contato&gt;</p>
+    <h2 class="contact-title grad-text">Vamos conversar?</h2>
+    <p class="contact-sub">Tenho interesse em projetos que aplicam IA a processos reais. Fique à vontade para entrar em contato por qualquer um dos canais abaixo.</p>
+    <div class="socials">
+      <a class="icon-btn" href="mailto:ricardojcfufsc@gmail.com" title="E-mail: ricardojcfufsc@gmail.com"><i class="fa-regular fa-envelope"></i></a>
+      <a class="icon-btn" href="https://wa.me/5533984453969" target="_blank" title="WhatsApp"><i class="fa-brands fa-whatsapp"></i></a>
+      <a class="icon-btn" href="https://www.linkedin.com/in/ricardo-jose-f/" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+      <a class="icon-btn" href="https://instagram.com/ricardo.jcf" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a class="icon-btn" href="https://github.com/ricardojosef" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+      <a class="icon-btn" href="https://behance.net/euricardo" target="_blank" title="Portfólio UI/UX design"><i class="fa-brands fa-behance"></i></a>
+    </div>
+  </div>
+</section>
+<footer>Esta página também foi desenvolvida por mim =)</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+/* ---------- mídia dos projetos ---------- */
+const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)').matches;
+const canHover=matchMedia('(hover:hover)').matches;
+
+// conversas reais do guia do assistente (Barra Floripa Surf School)
+const CHATS=[
+  {lang:'Português',msgs:[
+    ['user','Oi, tudo bem?'],
+    ['bot','🌊 <b>Bem-vindo(a) à Barra Floripa Surf School!</b> 👋\nEscolha uma opção:\n1️⃣ Aulas, horários e valores\n2️⃣ Agendar aula\n3️⃣ Aluguel de equipamento\n4️⃣ Falar com atendente'],
+    ['user','2'],
+    ['bot','Perfeito! 🤙 Antes de agendar, me diz seu <b>nome</b>?'],
+    ['user','Mariana'],
+    ['bot','Prazer, <b>Mariana</b>! Qual é o seu nível no surf?\n1️⃣ Iniciante 2️⃣ Intermediário 3️⃣ Avançado'],
+    ['user','1'],
+    ['bot','Perfeito, <b>Mariana</b>! 🏄 Para o nível <b>Iniciante</b>, nossas aulas são adaptadas para você evoluir com segurança.\n👉 Faça seu agendamento aqui:\n<a>app.barrafloripasurfschool.com.br</a>']
+  ]},
+  {lang:'Español',msgs:[
+    ['user','Hola! ¿Cuánto cuestan las clases?'],
+    ['bot','🌊 <b>¡Bienvenido(a) a Barra Floripa Surf School!</b>\nElige una opción:\n1️⃣ Clases, horarios y precios\n2️⃣ Reservar clase\n3️⃣ Alquiler de equipo\n4️⃣ Hablar con un asesor'],
+    ['user','3'],
+    ['bot','🏄 <b>Alquiler:</b>\n• Tabla: R$ 80\n• Traje de neopreno: R$ 50\nDirecto en la playa.']
+  ]}
+];
+const wait=ms=>new Promise(r=>setTimeout(r,ms));
+
+function setupMedia(ph){
+  const srcs=(ph.dataset.img||'').split('|').map(s=>s.trim()).filter(Boolean);
+  const label=ph.dataset.label||'Imagem do projeto';
+  if(!srcs.length&&!ph.dataset.video){
+    ph.insertAdjacentHTML('beforeend',`<div class="ph-in"><i class="fa-regular fa-image"></i><span>${label}</span><em>data-img="..."</em></div>`);
+    return;
+  }
+  ph.classList.add('media');
+  const frames=srcs.map((s,i)=>{const im=new Image();im.src=s;im.alt=i?'':label;im.loading='lazy';im.decoding='async';im.className='frame'+(i?'':' first');ph.appendChild(im);return im});
+  let video=null;
+  if(ph.dataset.video){video=document.createElement('video');video.src=ph.dataset.video;video.muted=true;video.loop=true;video.playsInline=true;video.preload='none';ph.appendChild(video)}
+  const chat=ph.hasAttribute('data-chat');
+  let chatBody=null;
+  if(chat){
+    ph.insertAdjacentHTML('beforeend',`<div class="chat" aria-hidden="true"><div class="phone"><div class="phone-top"><span class="av">🏄</span><div>Barra Floripa Surf School<small>online</small></div></div><div class="chat-body"></div></div></div>`);
+    chatBody=ph.querySelector('.chat-body');
+  }
+  const scroll=ph.hasAttribute('data-scroll');
+  const cv=ph.hasAttribute('data-cv');
+  if(cv){
+    // detecção + rastreio: janela em volta da bolha, vetores das partículas traçadoras e velocidade
+    // coordenadas no espaço da imagem (1000×500); centro da bolha no frame t e t+Δt
+    const [ax,ay,bx,by]=(ph.dataset.cv||'372,240,420,263').split(',').map(Number);
+    const dx=bx-ax, dy=by-ay, L=Math.hypot(dx,dy), ux=dx/L, uy=dy/L;
+    let vecs='';
+    [[-80,-80],[0,-85],[80,-78],[-85,0],[84,4],[-78,80],[2,84],[80,82],[-40,-88],[44,86],[-88,-40],[86,42]].forEach(([x,y],i)=>{
+      const a=Math.atan2(uy,ux)+((i*37)%11-5)*.035, l=24+(i*13)%9;
+      vecs+=`<line x1="${x}" y1="${y}" x2="${(x+Math.cos(a)*l).toFixed(1)}" y2="${(y+Math.sin(a)*l).toFixed(1)}" marker-end="url(#cvH)"/>`;
+    });
+    const tip=[ax+ux*L*2.6,ay+uy*L*2.6].map(n=>n.toFixed(1));
+    ph.insertAdjacentHTML('beforeend',`<svg class="cv" viewBox="0 0 1000 500" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <defs><marker id="cvH" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0 0L10 5L0 10z" fill="#ffd166"/></marker>
+      <marker id="cvV" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto"><path d="M0 0L10 5L0 10z" fill="#3ee0ff"/></marker></defs>
+      <text class="cv-t" x="${500-390}" y="${250-195}">frame t</text>
+      <text class="cv-t cv-t2" x="${500-390}" y="${250-195}">frame t + Δt</text>
+      <line class="cv-trail" x1="${ax}" y1="${ay}" x2="${bx}" y2="${by}"/>
+      <g class="cv-win" transform="translate(${ax} ${ay})">
+        <rect x="-100" y="-100" width="200" height="200"/>
+        <path class="cv-corner" d="M-100 -70V-100H-70M70 -100H100V-70M100 70V100H70M-70 100H-100V70"/>
+        <circle r="56"/>
+        <text x="-100" y="-112">bolha detectada</text>
+        <g class="cv-vecs">${vecs}</g>
+      </g>
+      <line class="cv-vel" x1="${ax}" y1="${ay}" x2="${tip[0]}" y2="${tip[1]}" pathLength="1" marker-end="url(#cvV)"/>
+      <text class="cv-vl" x="${+tip[0]+14}" y="${+tip[1]+8}">velocidade</text>
+    </svg>`);
+  }
+  const segs=chat||video||scroll||cv?0:frames.length;
+  if(segs>1)ph.insertAdjacentHTML('beforeend',`<div class="media-bar">${'<span><i></i></span>'.repeat(segs)}</div>`);
+  ph.insertAdjacentHTML('beforeend',`<span class="media-hint"><i class="fa-solid fa-play"></i>${chat?'Ver o assistente em ação':video?'Ver em funcionamento':cv?'Ver a detecção':scroll?'Ver o site rolando':'Ver em movimento'}</span>`);
+  if(segs>1)ph.insertAdjacentHTML('beforeend',`<span class="media-count">${segs} telas</span>`);
+  if(reduceMotion)return;
+
+  let tl=null, token=0;
+  async function runChat(my){
+    let c=0;
+    while(my===token){
+      const conv=CHATS[c++%CHATS.length];
+      chatBody.innerHTML=`<span class="chat-tag">${conv.lang}</span>`;
+      for(const [who,html] of conv.msgs){
+        if(my!==token)return;
+        if(who==='bot'){
+          chatBody.insertAdjacentHTML('beforeend','<div class="msg bot typing"><b></b><b></b><b></b></div>');
+          await wait(750);if(my!==token)return;
+          chatBody.lastElementChild.remove();
+        }
+        chatBody.insertAdjacentHTML('beforeend',`<div class="msg ${who}">${html}</div>`);
+        gsap.from(chatBody.lastElementChild,{y:12,opacity:0,duration:.3,ease:'power2.out'});
+        await wait(who==='bot'?1500:650);
+      }
+      await wait(1600);
+    }
+  }
+  function play(){
+    if(ph.classList.contains('playing'))return;
+    ph.classList.add('playing');
+    if(chat){const my=++token;runChat(my);return}
+    if(video){gsap.to(video,{opacity:1,duration:.3});video.play().catch(()=>{});return}
+    if(cv){
+      const q=s=>ph.querySelector(s), win=q('.cv-win'), vecs=ph.querySelectorAll('.cv-vecs line');
+      const [ax,ay,bx,by]=(ph.dataset.cv||'372,240,420,263').split(',').map(Number);
+      tl=gsap.timeline({repeat:-1,repeatDelay:.3})
+        .set(frames[1],{opacity:0}).set(win,{x:ax,y:ay}).set(vecs,{opacity:0})
+        .set([q('.cv-t2'),q('.cv-trail'),q('.cv-vel'),q('.cv-vl')],{opacity:0})
+        .set(q('.cv-vel'),{strokeDashoffset:1})
+        .to(q('.cv-t'),{opacity:1,duration:.3},.2)
+        .fromTo(win,{opacity:0,scale:1.35,svgOrigin:`${ax} ${ay}`},{opacity:1,scale:1,duration:.55,ease:'back.out(1.6)'},.4)
+        .to(frames[1],{opacity:1,duration:.45},1.9)
+        .to(q('.cv-t'),{opacity:0,duration:.2},1.9).to(q('.cv-t2'),{opacity:1,duration:.3},2)
+        .to(q('.cv-trail'),{opacity:1,duration:.3},1.95)
+        .to(win,{x:bx,y:by,duration:.6,ease:'power2.inOut'},1.95)
+        .to(vecs,{opacity:1,duration:.25,stagger:.05},2.8)
+        .to(q('.cv-vel'),{opacity:1,duration:.01},3.6).set(q('.cv-vel'),{attr:{x1:bx,y1:by,x2:bx+(bx-ax)*2.6,y2:by+(by-ay)*2.6}},3.6)
+        .set(q('.cv-vl'),{attr:{x:bx+(bx-ax)*2.6+14,y:by+(by-ay)*2.6+8}},3.6)
+        .to(q('.cv-vel'),{strokeDashoffset:0,duration:.5,ease:'power2.out'},3.6)
+        .to(q('.cv-vl'),{opacity:1,duration:.3},3.9)
+        .to(ph.querySelectorAll('.cv>*:not(defs)'),{opacity:0,duration:.35},6.4)
+        .to(frames[1],{opacity:0,duration:.35},6.4);
+      return;
+    }
+    if(scroll){
+      // rola a página inteira, pausando em cada seção como quem lê o site
+      const stops=(ph.dataset.scroll||'0,15,37,50,62,77,88,100').split(',').map(Number);
+      tl=gsap.timeline({repeat:-1,delay:.5});
+      stops.slice(1).forEach(p=>tl.to(frames[0],{objectPosition:`0% ${p}%`,duration:1.1,ease:'power2.inOut'},'+=1.1'));
+      tl.to(frames[0],{opacity:0,duration:.35},'+=1.4').set(frames[0],{objectPosition:'0% 0%'}).to(frames[0],{opacity:1,duration:.35});
+      return;
+    }
+    const bars=ph.querySelectorAll('.media-bar i'), D=3.2;
+    tl=gsap.timeline({repeat:-1});
+    frames.forEach((f,i)=>{
+      const t=i*D;
+      tl.set(f,{zIndex:1},t)
+        .fromTo(f,{opacity:i?0:1},{opacity:1,duration:.45},t)
+        .fromTo(f,{objectPosition:'0% 0%',scale:1},{objectPosition:'100% 100%',scale:1.07,duration:D+.45,ease:'sine.inOut'},t);
+      if(bars[i])tl.fromTo(bars[i],{scaleX:0},{scaleX:1,duration:D,ease:'none'},t);
+      if(frames.length>1)tl.set(f,{zIndex:0},t+D).to(f,{opacity:0,duration:.45},t+D+.45);
+    });
+    if(bars.length)tl.set(bars,{scaleX:0},frames.length*D);
+  }
+  function stop(){
+    if(!ph.classList.contains('playing'))return;
+    ph.classList.remove('playing');
+    token++;
+    if(video){video.pause();gsap.to(video,{opacity:0,duration:.25})}
+    if(tl){tl.kill();tl=null}
+    gsap.to(frames,{opacity:i=>i?0:1,objectPosition:cv?'50% 50%':'0% 0%',scale:1,duration:.4,overwrite:true});
+    if(cv)gsap.to(ph.querySelectorAll('.cv>*:not(defs)'),{opacity:0,duration:.25,overwrite:true});
+    gsap.set(ph.querySelectorAll('.media-bar i'),{scaleX:0});
+  }
+  if(canHover){
+    const card=ph.closest('.proj')||ph;
+    card.addEventListener('mouseenter',play);
+    card.addEventListener('mouseleave',stop);
+  }else{
+    // touch: toca quando o card está bem visível na tela
+    new IntersectionObserver(es=>es.forEach(e=>e.isIntersecting?play():stop()),{threshold:.65}).observe(ph);
+  }
+}
+document.querySelectorAll('.ph').forEach(setupMedia);
+
+/* ---------- fundo de código ---------- */
+(function(){
+  const lines=['const solucao = await construir({ dor, usuario, ia: true });','if (problema.recorrente) entrevistar(usuarios);','skills.map(s => prompt(s).versionar()).filter(Boolean);','chatbot.on("mensagem", m => reservar(m.intencao));','for (const ideia of backlog) { prototipar(ideia); medir(); }','while (!adotado) iterar(feedback);','GmailApp.sendEmail(membro.email, assunto, lembrete);','modelo.fit(dadosSinteticos, { epochs: 50 });'];
+  let out='';for(let i=0;i<60;i++)out+=' '.repeat((i*7)%40)+lines[i%lines.length]+'\n';
+  document.getElementById('codeBg').textContent=out;
+})();
+
+/* ---------- digitação ---------- */
+const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+(function(){
+  const text='<Prazer, sou o Ricardo!>', el=document.getElementById('typing');
+  if(reduce){el.textContent=text;return}
+  let i=0;(function t(){if(i<text.length){el.textContent+=text.charAt(i++);setTimeout(t,80)}})();
+})();
+
+/* ---------- filtros ---------- */
+const chips=document.querySelectorAll('.chip'), cards=[...document.querySelectorAll('.proj')];
+chips.forEach(c=>{
+  const f=c.dataset.filter, n=f==='all'?cards.length:cards.filter(p=>p.dataset.cat.includes(f)).length;
+  c.insertAdjacentHTML('beforeend',`<span class="c">${n}</span>`);
+  c.addEventListener('click',()=>{
+    chips.forEach(x=>x.classList.toggle('on',x===c));
+    const show=cards.filter(p=>f==='all'||p.dataset.cat.includes(f));
+    gsap.to(cards,{opacity:0,y:16,duration:.18,onComplete(){
+      cards.forEach(p=>p.classList.toggle('hide',!show.includes(p)));
+      gsap.fromTo(show,{opacity:0,y:24},{opacity:1,y:0,duration:.45,stagger:.05,ease:'power2.out'});
+      ScrollTrigger.refresh();
+    }});
+  });
+});
+
+/* ---------- GSAP ---------- */
+gsap.registerPlugin(ScrollTrigger);
+if(!reduce){
+  gsap.to('#progress',{scaleX:1,ease:'none',scrollTrigger:{start:0,end:'max',scrub:.3}});
+  gsap.to('nav.top',{opacity:1,duration:.6,delay:1.2});
+
+  const tl=gsap.timeline({defaults:{ease:'power3.out'}});
+  tl.from('.hero-photo img',{y:30,opacity:0,duration:1})
+    .from('.hero-lead',{y:24,opacity:0,duration:.7},.9)
+    .from('.hero-cta .btn',{y:20,opacity:0,stagger:.12,duration:.5},1.1)
+    .from('.float-chip',{scale:.6,opacity:0,stagger:.15,duration:.6,ease:'back.out(1.8)'},1.2);
+  gsap.to('.float-chip',{y:-10,duration:2.2,ease:'sine.inOut',yoyo:true,repeat:-1,stagger:.4});
+  gsap.to('#codeBg',{yPercent:-12,ease:'none',scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}});
+
+  // contadores
+  document.querySelectorAll('[data-count]').forEach(el=>{
+    const o={v:0};
+    gsap.to(o,{v:+el.dataset.count,duration:1.8,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',once:true},onUpdate(){el.textContent=Math.round(o.v)}});
+  });
+  gsap.from('.stats',{y:40,opacity:0,duration:.8,scrollTrigger:{trigger:'.stats',start:'top 90%',once:true}});
+
+  // títulos de seção
+  gsap.utils.toArray('.sec-head, .contact-title, .contact-sub').forEach(h=>{
+    gsap.from(h,{y:40,opacity:0,duration:.8,ease:'power3.out',scrollTrigger:{trigger:h,start:'top 85%',once:true}});
+  });
+  gsap.from('.chip',{y:16,opacity:0,stagger:.06,duration:.4,scrollTrigger:{trigger:'.filters',start:'top 88%',once:true}});
+
+  // cards
+  ScrollTrigger.batch('.proj',{start:'top 88%',once:true,onEnter:b=>gsap.from(b,{y:60,opacity:0,stagger:.1,duration:.8,ease:'power3.out',clearProps:'transform,opacity'})});
+  gsap.from('.repos .btn',{y:24,opacity:0,stagger:.1,duration:.5,scrollTrigger:{trigger:'.repos',start:'top 88%',once:true}});
+
+  // método
+  gsap.from('.method-line',{scaleX:0,duration:1.2,ease:'power2.inOut',scrollTrigger:{trigger:'.method',start:'top 85%',once:true}});
+  gsap.from('.step',{y:40,opacity:0,stagger:.15,duration:.7,scrollTrigger:{trigger:'.method',start:'top 85%',once:true}});
+
+  // timeline
+  gsap.to('.timeline .rail i',{scaleY:1,ease:'none',scrollTrigger:{trigger:'.timeline',start:'top 70%',end:'bottom 70%',scrub:true}});
+  gsap.utils.toArray('.job').forEach(j=>gsap.from(j,{x:-30,opacity:0,duration:.7,scrollTrigger:{trigger:j,start:'top 85%',once:true}}));
+
+  ScrollTrigger.batch('.skill, .edu div',{start:'top 90%',once:true,onEnter:b=>gsap.from(b,{y:30,opacity:0,stagger:.08,duration:.6})});
+  gsap.from('.socials .icon-btn',{y:30,opacity:0,stagger:.08,duration:.5,ease:'back.out(2)',scrollTrigger:{trigger:'.socials',start:'top 92%',once:true}});
+
+  // tilt nos cards (desktop)
+  if(matchMedia('(hover:hover)').matches){
+    cards.forEach(c=>{
+      c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;gsap.to(c,{rotateY:x*5,rotateX:-y*5,y:-6,transformPerspective:900,duration:.4})});
+      c.addEventListener('mouseleave',()=>gsap.to(c,{rotateY:0,rotateX:0,y:0,duration:.5}));
+    });
+  }
+}else{
+  document.querySelector('nav.top').style.opacity=1;
+  document.querySelectorAll('[data-count]').forEach(el=>el.textContent=el.dataset.count);
+}
+
+/* ---------- nav ativa ---------- */
+const links=document.querySelectorAll('nav.top a');
+document.querySelectorAll('header#hero, section[id]').forEach(s=>{
+  ScrollTrigger.create({trigger:s,start:'top 50%',end:'bottom 50%',onToggle:self=>{if(self.isActive)links.forEach(a=>a.classList.toggle('active',a.getAttribute('href')==='#'+s.id))}});
+});
+</script>
 </body>
 </html>
